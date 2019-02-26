@@ -40,7 +40,32 @@ MAR:[324, 403,369, 364,'red'],
 BON:[416, 401,462, 347,1],
 CHN:[951, 401,827, 286,'red'],
 STP:[1001, 427,954, 333,'red'],
-LIV:[1326, 336,1107, 298,1]
+LIV:[1326, 336,1107, 298,1],
+PAD:[64, 167,207, 321,1],
+EDG:[186, 129,252, 253,'brown'],
+MLB:[282, 132,322, 222,1],
+BAK:[454, 171,384, 208,1],
+REG:[487, 282,483, 201,'brown'],
+WST:[615, 725,698, 553,1],
+SWR:[860, 890,892, 512,1],
+BRM:[1344, 745,1294, 607,1],
+CNW:[1477, 744,1428, 603,1],
+BAY:[94, 295,80, 380,'green'],
+HSK:[95, 513,23, 561,'green'],
+GLR:[153, 728,131, 661,'green'],
+SSQ:[329, 723,387, 693,'green'],
+SJP:[515, 724,610, 581,'green'],
+TMP:[970, 706,799, 399,'green'],
+BLF:[1014, 668,907, 395,1],
+MNH:[1051, 624,1003, 378,'green'],
+CNS:[1088, 593,1036, 390,1],
+MON:[1202, 558,1070, 400,1],
+TWH:[1367, 558,1173, 415,1],
+ALG:[1411, 472,1214, 331,'yellow'],
+GPS:[582, 169,511, 197,'yellow'],
+ESQ:[806, 175,598, 170,1],
+FAR:[1038, 225,895, 255,1],
+BRB:[1094, 288,962, 254,'yellow']
 };
 // var stops = {
 // 	KGX: [100,100,200,200,1],
@@ -67,7 +92,8 @@ var piccadilly = {
 	6: ["PCD","GRP"],
 	7: ["GRP","HPC"],
 	8: ["HPC","KNB"],
-	9: ["KNB","SKN"]
+	9: ["KNB","SKN"],
+	10: ["SKN","GLR"]
 };
 var central = {
 	1: ["NHG","QUE"],
@@ -96,6 +122,61 @@ var north = {
 	11: ["OLD","MOO"],
 	12: ["MOO","BNK"],
 	13: ["BNK","LNB"]
+};
+var bakerloo = {
+	1: ["PAD","EDG"],
+	2: ["EDG","MLB"],
+	3: ["MLB","BAK"],
+	4: ["BAK","REG"],
+	5: ["REG","OXC"],
+	6: ["OXC","PCD"],
+	7: ["PCD","CHX"],
+	8: ["CHX","EMB"],
+	9: ["EMB","WTL"]
+};
+var jubilee = {
+	1: ["BAK","BON"],
+	2: ["BON","GRP"],
+	3: ["GRP","WST"],
+	4: ["WST","WTL"],
+	5: ["WTL","SWR"],
+	6: ["SWR","LNB"],
+	7: ["LNB","BRM"],
+	8: ["BRM","CNW"]
+};
+var hs = {
+	1: ["PAD","EDG"],
+	2: ["EDG","BAK"]
+};
+var hsm = {
+	1: ["BAK","GPS"],
+	2: ["GPS","ESQ"],
+	3: ["ESQ","KGX"],
+	4: ["KGX","FAR"],
+	5: ["FAR","BRB"],
+	6: ["BRB","MOO"],
+	7: ["MOO","LIV"],
+	8: ["LIV","ALG"]
+};
+var cd = {
+	1: ["EDG","PAD"],
+	2: ["PAD","BAY"],
+	3: ["BAY","NHG"],
+	4: ["NHG","HSK"],
+	5: ["HSK","GLR"],
+	6: ["GLR","SKN"],
+	7: ["SKN","SSQ"],
+	8: ["SSQ","VIC"],
+	9: ["VIC","SJP"],
+	10: ["SJP","WST"],
+	11: ["WST","EMB"],
+	12: ["EMB","TMP"],
+	13: ["TMP","BLF"],
+	14: ["BLF","MNH"],
+	15: ["MNH","CNS"],
+	16: ["CNS","MON"],
+	17: ["MON","TWH"],
+	18: ["TWH","ALG"]
 };
 var vic = {
 	1: ["KGX","EUS"],
@@ -135,6 +216,11 @@ function draw() {
 	doLINE(north,'black');
 	doLINE(central,'red');
 	doLINE(vic,'deepskyblue');
+	doLINE(jubilee,'grey');
+	doLINE(bakerloo,'brown');
+	doLINEdouble(cd,'green','yellow');
+	doLINEdouble(hs,'PaleVioletRed','yellow');
+	doLINEtriple(hsm,'yellow','purple','palevioletred');
 
 	doSTOPS(stops);
 
@@ -180,6 +266,27 @@ function doLINEdouble(connections,color1,color2){
 		line(X1,Y1,X2,Y2);
 		stroke(color2);
 		line(X1+pX*4,Y1+pY*4,X2+pX*4,Y2+pY*4);
+	}
+}
+
+function doLINEtriple(connections,color1,color2,color3){
+	var connection;
+	for (connection in connections){
+		[X1,Y1] = moving_point(stops[connections[connection][0]][0], stops[connections[connection][0]][1],stops[connections[connection][0]][2],stops[connections[connection][0]][3],speed);
+		[X2,Y2] = moving_point(stops[connections[connection][1]][0], stops[connections[connection][1]][1],stops[connections[connection][1]][2],stops[connections[connection][1]][3],speed);
+		var dX = X2-X1;
+		var dY = Y2-Y1;
+		var pX = dY;
+		var pY = dX;
+		var norm = sqrt(pX*pX+pY*pY);
+		pX = pX/norm;
+		pY = pY/norm;
+		stroke(color1);
+		line(X1,Y1,X2,Y2);
+		stroke(color2);
+		line(X1+pX*4,Y1+pY*4,X2+pX*4,Y2+pY*4);
+		stroke(color3);
+		line(X1-pX*4,Y1-pY*4,X2-pX*4,Y2-pY*4);
 	}
 }
 
