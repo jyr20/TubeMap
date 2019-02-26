@@ -5,7 +5,7 @@
 let bg;
 // let riv;
 var angle = 0;
-var speed = 0.1;
+var speed = 0.05;
 var slope = 1;
 var pos = 0.5;
 var stops = {
@@ -61,11 +61,11 @@ MNH:[1051, 624,1003, 378,'green'],
 CNS:[1088, 593,1036, 390,1],
 MON:[1202, 558,1070, 400,1],
 TWH:[1367, 558,1173, 415,1],
-ALG:[1411, 472,1214, 331,'yellow'],
-GPS:[582, 169,511, 197,'yellow'],
+ALG:[1411, 472,1214, 331,'gold'],
+GPS:[582, 169,511, 197,'gold'],
 ESQ:[806, 175,598, 170,1],
 FAR:[1038, 225,895, 255,1],
-BRB:[1094, 288,962, 254,'yellow']
+BRB:[1094, 288,962, 254,'gold']
 };
 // var stops = {
 // 	KGX: [100,100,200,200,1],
@@ -218,9 +218,9 @@ function draw() {
 	doLINE(vic,'deepskyblue');
 	doLINE(jubilee,'grey');
 	doLINE(bakerloo,'brown');
-	doLINEdouble(cd,'green','yellow');
-	doLINEdouble(hs,'PaleVioletRed','yellow');
-	doLINEtriple(hsm,'yellow','purple','palevioletred');
+	doLINEdouble(cd,'green','gold');
+	doLINEdouble(hs,'PaleVioletRed','gold');
+	doLINEtriple(hsm,'gold','purple','palevioletred');
 
 	doSTOPS(stops);
 
